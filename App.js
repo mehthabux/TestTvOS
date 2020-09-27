@@ -1,37 +1,46 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import React from 'react';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {enableScreens} from 'react-native-screens';
+import Home from './src/screens/Home';
+import Details from './src/screens/Details';
+
+enableScreens();
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [inputText, setInputText] = useState('');
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Text Input</Text>
-      <TextInput
-        multiline
-        value={inputText}
-        onChangeText={(txt) => setInputText(txt)}
-        placeholder="Your text here"
-        style={styles.inputStyle}
-      />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        mode="modal"
+        headerMode="screen"
+        initialRouteName="Main"
+        screenOptions={{
+          headerShown: false,
+          cardStyle: {backgroundColor: 'transparent'},
+          cardOverlayEnabled: true,
+          cardStyleInterpolator: ({current: {progress}}) => ({
+            cardStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 0.5, 0.9, 1],
+                outputRange: [0, 0.25, 0.7, 1],
+              }),
+            },
+            overlayStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 0.5],
+                extrapolate: 'clamp',
+              }),
+            },
+          }),
+        }}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={Details} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 25,
-  },
-  heading: {
-    fontSize: 30,
-  },
-  inputStyle: {
-    borderWidth: 1,
-    padding: 20,
-    minHeight: 80,
-    marginTop: 30,
-    fontSize: 25,
-  },
-});
