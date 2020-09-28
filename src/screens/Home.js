@@ -1,3 +1,4 @@
+import {useIsFocused} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
@@ -18,6 +19,7 @@ const data = {
 
 const Home = ({navigation}) => {
   const [inputText, setInputText] = useState('');
+  const focus = useIsFocused();
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Text Input</Text>
@@ -39,10 +41,13 @@ const Home = ({navigation}) => {
           <FlatList
             style={{marginTop: 50}}
             data={data[item]}
+            scrollEnabled={focus}
             horizontal
             keyExtractor={(newItem) => newItem.toString()}
             renderItem={({item: newItem}) => (
               <TouchableOpacity
+                isTVSelectable={focus}
+                accessible={focus}
                 onPress={() => {
                   TVMenuControl.enableTVMenuKey();
                   navigation.navigate('Details', {

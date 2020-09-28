@@ -17,6 +17,10 @@ export default function Details({route}) {
         hasTVPreferredFocus={true}
         style={{height: 200, width: 200, backgroundColor: '#000'}}
       />
+      <TouchableOpacity
+        hasTVPreferredFocus={true}
+        style={{height: 200, width: 200, backgroundColor: '#000'}}
+      />
     </View>
   );
 }
