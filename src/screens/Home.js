@@ -34,14 +34,13 @@ const Home = ({navigation}) => {
         style={styles.inputStyle}
       />
       <FlatList
-        t
+        scrollEnabled={focus}
         data={Object.keys(data)}
         keyExtractor={(item) => item}
         renderItem={({item}) => (
           <FlatList
             style={{marginTop: 50}}
             data={data[item]}
-            scrollEnabled={focus}
             horizontal
             keyExtractor={(newItem) => newItem.toString()}
             renderItem={({item: newItem}) => (
