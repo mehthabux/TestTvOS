@@ -24,9 +24,7 @@ const Home = ({navigation}) => {
     <View style={styles.container}>
       <Text style={styles.heading}>Text Input</Text>
       <TextInput
-        // multiline
         value={inputText}
-        // tvParallaxProperties={{enabled: false}}
         placeholderTextColor="#fff"
         tvParallaxMagnification={0}
         onChangeText={(txt) => setInputText(txt)}
@@ -36,12 +34,17 @@ const Home = ({navigation}) => {
       <FlatList
         scrollEnabled={focus}
         data={Object.keys(data)}
+        accessible={focus}
         keyExtractor={(item) => item}
+        onMomentumScrollBegin={() => {
+          console.log('hello world');
+        }}
         renderItem={({item}) => (
           <FlatList
             style={{marginTop: 50}}
             data={data[item]}
             horizontal
+            scrollEnabled={focus}
             keyExtractor={(newItem) => newItem.toString()}
             renderItem={({item: newItem}) => (
               <TouchableOpacity
